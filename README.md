@@ -1,6 +1,8 @@
 WordPress Grunt Starter Theme
 =============================
 
+[![endorse](https://api.coderwall.com/felixarntz/endorsecount.png)](https://coderwall.com/felixarntz)
+
 A simple blank [WordPress](http://wordpress.org/) starter theme intended to use with [Grunt](http://gruntjs.com/). It is a solid flexible base, and gives you an efficient workflow since all the necessary stylesheets and scripts are compiled automatically by just one command in the console.
 
 Features
