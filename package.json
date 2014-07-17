@@ -1,0 +1,46 @@
+{
+  "name": "mywptheme",
+  "themeName": "My WP Theme",
+  "classPrefix": "MyWPTheme",
+  "constantPrefix": "MYWPTHEME",
+  "version": "1.0.0",
+  "description": "A simple blank WordPress starter theme intended to use with Grunt.",
+  "keywords": [
+    "wordpress", "grunt", "starter-theme", "bootstrap-grid"
+  ],
+  "author": {
+    "name": "John Doe",
+    "email": "john-doe@johndoe.com",
+    "url": "http://johndoe.com"
+  },
+  "homepage": "http://mywptheme.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/johndoe/mywptheme.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/johndoe/mywptheme/issues"
+  },
+  "license": {
+    "type": "GPL-2.0",
+    "name": "GNU General Public License v2",
+    "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-less": "~0.11.3",
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-autoprefixer": "~0.8.1",
+    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-banner": "~0.2.3",
+    "grunt-text-replace": "~0.3.12",
+    "grunt-wp-i18n": "~0.4.5"
+  }
+}
