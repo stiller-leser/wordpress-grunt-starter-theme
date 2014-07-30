@@ -31,7 +31,7 @@ The default procedure you will be using over and over is the following: Everytim
 
 To use `watch` mode, where scripts and stylesheets are automatically regenerated everytime you change them, enter `grunt watch` into terminal. You can also watch scripts and stylesheets independently from each other, by using `grunt watch:scripts` or `grunt watch:stylesheets`.
 
-* A tiny hint: * If you want to regenerate the new translation file (a .pot file located in `languages/`), you should type `grunt theme-refresh` into Terminal.
+**A tiny hint:** If you want to regenerate the new translation file (a .pot file located in `languages/`), you should type `grunt theme-refresh` into Terminal.
 
 How To Use SASS instead of LESS
 -------------------------------
