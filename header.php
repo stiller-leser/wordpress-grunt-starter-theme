@@ -2,7 +2,7 @@
 /**
  * The header for our theme.
  *
- * Displays all of the <head> section and everything up till <section id="content">
+ * Displays all of the <head> section and everything up till <div id="content">
  *
  * @package mywptheme
  */
@@ -21,12 +21,19 @@
 
   <header role="banner">
     
-    <?php if( has_nav_menu( 'primary' ) ) : ?>
-    <nav role="navigation">
-      <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-    </nav>
-    <?php endif; ?>
+    <div class="container">
+
+      <h1><?php bloginfo( 'name' ); ?></h1>
+      <h2><?php bloginfo( 'description' ); ?></h2>
+
+      <?php if( has_nav_menu( 'primary' ) ) : ?>
+      <nav role="navigation">
+        <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+      </nav>
+      <?php endif; ?>
+      
+    </div>
 
   </header>
 
-  <section id="content">
+  <div id="content">

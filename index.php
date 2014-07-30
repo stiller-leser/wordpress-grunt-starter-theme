@@ -7,11 +7,20 @@
 
 get_header(); ?>
 
-  <div id="primary" class="content-area">
-    <main role="main">
+  <div class="container">
+    <div class="row">
 
-    </main><!-- #main -->
-  </div><!-- #primary -->
+      <main class="primary col-md-<?php echo ( is_active_sidebar( 'primary' ) ? 9 : 12 ); ?>" role="main">
+      
+      </main>
 
-<?php get_sidebar(); ?>
+      <?php if( is_active_sidebar( 'primary' ) ) : ?>
+      <aside class="secondary col-md-3" role="complementary">
+        <?php get_sidebar(); ?>
+      </aside>
+      <?php endif; ?>
+
+    </div>
+  </div>
+
 <?php get_footer(); ?>

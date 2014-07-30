@@ -22,11 +22,15 @@ module.exports = function(grunt) {
                   '*/',
 
     clean: {
-      dist: [
-        'assets/dist/<%= pkg.name %>.css',
-        'assets/dist/<%= pkg.name %>.min.css',
+      scripts: [
         'assets/dist/<%= pkg.name %>.js',
-        'assets/dist/<%= pkg.name %>.min.js',
+        'assets/dist/<%= pkg.name %>.min.js'
+      ],
+      stylesheets: [
+        'assets/dist/<%= pkg.name %>.css',
+        'assets/dist/<%= pkg.name %>.min.css'
+      ],
+      pot: [
         'languages/<%= pkg.name %>.pot'
       ]
     },
@@ -184,6 +188,23 @@ module.exports = function(grunt) {
           type: 'wp-theme'
         }
       }
+    },
+
+    watch: {
+      scripts: {
+        files: ['assets/dev/scripts.js'],
+        tasks: ['clean:scripts', 'jshint', 'concat', 'uglify'],
+        options: {
+          spawn: false
+        }
+      },
+      stylesheets: {
+        files: ['assets/dev/style.less'],
+        tasks: ['clean:stylesheets', 'less', /*'sass',*/ 'autoprefixer', 'cssmin', 'usebanner'],
+        options: {
+          spawn: false
+        }
+      }
     }
 
   });
@@ -199,6 +220,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-wp-i18n');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', [
     'clean',

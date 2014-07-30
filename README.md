@@ -3,7 +3,7 @@ WordPress Grunt Starter Theme
 
 [![endorse](https://api.coderwall.com/felixarntz/endorsecount.png)](https://coderwall.com/felixarntz)
 
-A simple blank [WordPress](http://wordpress.org/) starter theme intended to use with [Grunt](http://gruntjs.com/). It is a solid flexible base, and gives you an efficient workflow since all the necessary stylesheets and scripts are compiled automatically by just one command in the console.
+A simple blank [WordPress](http://wordpress.org/) starter theme intended to use with [Grunt](http://gruntjs.com/). It is a solid flexible base, and gives you an efficient workflow since all the necessary stylesheets and scripts are compiled automatically by just one command in the console. You can furthermore enable `watch` mode so that scripts and stylesheets are automatically processed whenever you change their source files.
 
 Features
 --------
@@ -28,6 +28,8 @@ To get started with Grunt, you need to have [Node.js](http://nodejs.org/) instal
 Now let's get into business: The stylesheets and scripts you should edit yourself are `assets/dev/style.less` and `assets/dev/scripts.js`. The files located in `assets/dist/` will be regenerated everytime you run grunt, so DO NOT EDIT THESE. The theme's `style.css` is only used for the theme header (since WordPress requires it), but you should not use it as an actual stylesheet.
 
 The default procedure you will be using over and over is the following: Everytime you would like to preview your changes (whether it is stylesheets or scripts), simply type `grunt` into Terminal (again, of course, inside your theme folder). This compiles and regenerates the required files.
+
+To use `watch` mode, where scripts and stylesheets are automatically regenerated everytime you change them, enter `grunt watch` into terminal. You can also watch scripts and stylesheets independently from each other, by using `grunt watch:scripts` or `grunt watch:stylesheets`.
 
 * A tiny hint: * If you want to regenerate the new translation file (a .pot file located in `languages/`), you should type `grunt theme-refresh` into Terminal.
 
