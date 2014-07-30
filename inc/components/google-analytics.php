@@ -27,19 +27,22 @@ class MyWPTheme_Google_Analytics
   
   private function __construct()
   {
-    if( defined( 'MYWPTHEME_GA_ACCOUNT' ) )
+    if( !is_admin() || defined( 'DOING_AJAX' ) && DOING_AJAX )
     {
-      $this->account = MYWPTHEME_GA_ACCOUNT;
-    }
-    
-    if( !empty( $this->account ) )
-    {
-      $this->domain = str_replace( 'https://', '', str_replace( 'http://', '', home_url() ) );
-      if( defined( 'MYWPTHEME_GA_MODE' ) && MYWPTHEME_GA_MODE == 'classic' )
+      if( defined( 'MYWPTHEME_GA_ACCOUNT' ) )
       {
-        $this->mode = MYWPTHEME_GA_MODE;
+        $this->account = MYWPTHEME_GA_ACCOUNT;
       }
-      add_action( 'wp_footer', array( $this, 'append' ) );
+      
+      if( !empty( $this->account ) )
+      {
+        $this->domain = str_replace( 'https://', '', str_replace( 'http://', '', home_url() ) );
+        if( defined( 'MYWPTHEME_GA_MODE' ) && MYWPTHEME_GA_MODE == 'classic' )
+        {
+          $this->mode = MYWPTHEME_GA_MODE;
+        }
+        add_action( 'wp_footer', array( $this, 'append' ) );
+      }
     }
   }
   

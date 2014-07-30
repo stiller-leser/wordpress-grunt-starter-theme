@@ -24,12 +24,14 @@ if( is_admin() )
 else
 {
   require_once MYWPTHEME_THEME_PATH . '/inc/frontend.php';
-  if( MYWPTHEME_ENABLE_BOOTSTRAP_NAVIGATION )
-  {
-    require_once MYWPTHEME_THEME_PATH . '/inc/components/bootstrap-navigation.php';
-  }
-  if( MYWPTHEME_ENABLE_GOOGLE_ANALYTICS )
-  {
-    require_once MYWPTHEME_THEME_PATH . '/inc/components/google-analytics.php';
-  }
+}
+
+// components
+if( MYWPTHEME_ENABLE_BOOTSTRAP_NAVIGATION )
+{
+  require_once MYWPTHEME_THEME_PATH . '/inc/components/bootstrap-navigation.php';
+}
+if( MYWPTHEME_ENABLE_GOOGLE_ANALYTICS )
+{
+  require_once MYWPTHEME_THEME_PATH . '/inc/components/google-analytics.php';
 }
