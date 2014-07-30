@@ -11,6 +11,15 @@ get_header(); ?>
     <div class="row">
 
       <main class="primary col-md-<?php echo ( is_active_sidebar( 'primary' ) ? 9 : 12 ); ?>" role="main">
+
+        <?php if( have_posts() ) : ?>
+          <?php while( have_posts() ) : the_post(); ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+              <h1><?php the_title(); ?></h1>
+              <?php the_content(); ?>
+            </article>
+          <?php endwhile; ?>
+        <?php endif; ?>
       
       </main>
 
