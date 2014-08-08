@@ -20,22 +20,22 @@ module.exports = function(grunt) {
                   'Version: <%= pkg.version %>\n' +
                   'License: <%= pkg.license.name %>\n' +
                   'License URI: <%= pkg.license.url %>\n' +
-                  'Text Domain: <%= pkg.name %>\n' +
+                  'Text Domain: <%= pkg.functionPrefix %>\n' +
                   'Domain Path: /languages/\n' +
                   'Tags:\n' +
                   '*/',
 
     clean: {
       scripts: [
-        'assets/dist/<%= pkg.name %>.js',
-        'assets/dist/<%= pkg.name %>.min.js'
+        'assets/dist/<%= pkg.functionPrefix %>.js',
+        'assets/dist/<%= pkg.functionPrefix %>.min.js'
       ],
       stylesheets: [
-        'assets/dist/<%= pkg.name %>.css',
-        'assets/dist/<%= pkg.name %>.min.css'
+        'assets/dist/<%= pkg.functionPrefix %>.css',
+        'assets/dist/<%= pkg.functionPrefix %>.min.css'
       ],
       pot: [
-        'languages/<%= pkg.name %>.pot'
+        'languages/<%= pkg.functionPrefix %>.pot'
       ]
     },
 
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
           'assets/dev/bootstrap/js/transition.js',
           'assets/dev/scripts.js'
         ],
-        dest: 'assets/dist/<%= pkg.name %>.js'
+        dest: 'assets/dist/<%= pkg.functionPrefix %>.js'
       }
     },
 
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'assets/dist/<%= pkg.name %>.min.js'
+        dest: 'assets/dist/<%= pkg.functionPrefix %>.min.js'
       }
     },
 
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
           strictMath: true
         },
         files: {
-          'assets/dist/<%= pkg.name %>.css': 'assets/dev/style.less'
+          'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
         }
       }
     },
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'assets/dist/<%= pkg.name %>.css': 'assets/dev/style.scss'
+          'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.scss'
         }
       }
     },
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
         ]
       },
       dist: {
-        src: 'assets/dist/<%= pkg.name %>.css'
+        src: 'assets/dist/<%= pkg.functionPrefix %>.css'
       }
     },
 
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'assets/dist/<%= pkg.name %>.min.css': 'assets/dist/<%= pkg.name %>.css'
+          'assets/dist/<%= pkg.functionPrefix %>.min.css': 'assets/dist/<%= pkg.functionPrefix %>.css'
         }
       },
     },
@@ -177,7 +177,7 @@ module.exports = function(grunt) {
         options: {
           domainPath: '/languages',
           potComments: 'Copyright (c) 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>',
-          potFilename: '<%= pkg.name %>.pot',
+          potFilename: '<%= pkg.functionPrefix %>.pot',
           potHeaders: {
             'report-msgid-bugs-to': '<%= pkg.homepage %>',
             'x-generator': 'grunt-wp-i18n 0.4.5',
