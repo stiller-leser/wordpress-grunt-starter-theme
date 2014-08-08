@@ -200,14 +200,14 @@ module.exports = function(grunt) {
         files: ['assets/dev/scripts.js'],
         tasks: ['scripts'],
         options: {
-          spawn: false
+          livereload: true
         }
       },
       stylesheets: {
         files: (hasLess) ? ['assets/dev/style.less'] : ((hasSass) ? ['assets/dev/style.scss'] : null),
         tasks: ['stylesheets'],
         options: {
-          spawn: false
+          livereload: true
         }
       }
     }

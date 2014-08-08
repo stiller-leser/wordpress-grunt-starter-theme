@@ -1,8 +1,8 @@
 {
-  "name": "mywptheme",
-  "themeName": "My WP Theme",
-  "classPrefix": "MyWPTheme",
-  "constantPrefix": "MYWPTHEME",
+  "name": "<%= conf.get('themeDir') %>",
+  "themeName": "<% print(conf.get('themeDir').replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})); %>",
+  "classPrefix": "<% print(conf.get('themeDir').replace('-', '_')); %>",
+  "constantPrefix": "<% print(conf.get('themeDir').replace('-', '_').toUpperCase()); %>",
   "version": "1.0.0",
   "description": "A simple blank WordPress starter theme intended to use with Grunt.",
   "keywords": [
@@ -13,13 +13,13 @@
     "email": "john-doe@johndoe.com",
     "url": "http://johndoe.com"
   },
-  "homepage": "http://mywptheme.com",
+  "homepage": "http://<%= conf.get('themeDir') %>.com",
   "repository": {
     "type": "git",
-    "url": "git://github.com/johndoe/mywptheme.git"
+    "url": "git://github.com/johndoe/<%= conf.get('themeDir') %>.git"
   },
   "bugs": {
-    "url" : "https://github.com/johndoe/mywptheme/issues"
+    "url" : "https://github.com/johndoe/<%= conf.get('themeDir') %>/issues"
   },
   "license": {
     "type": "GPL-2.0",
