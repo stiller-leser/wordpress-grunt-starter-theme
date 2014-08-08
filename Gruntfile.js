@@ -167,7 +167,7 @@ module.exports = function(grunt) {
           to: '<%= pkg.constantPrefix %>'
         }, {
           from: 'mywptheme',
-          to: '<%= pkg.name %>'
+          to: '<%= pkg.functionPrefix %>'
         }]
       }
     },

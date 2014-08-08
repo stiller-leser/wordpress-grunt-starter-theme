@@ -1,8 +1,9 @@
 {
   "name": "<%= conf.get('themeDir') %>",
   "themeName": "<% print(conf.get('themeDir').replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})); %>",
-  "classPrefix": "<% print(conf.get('themeDir').replace('-', '_')); %>",
-  "constantPrefix": "<% print(conf.get('themeDir').replace('-', '_').toUpperCase()); %>",
+  "functionPrefix": "<% print(conf.get('themeDir').replace('-', '')); %>",
+  "classPrefix": "<% print(conf.get('themeDir').replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(' ', '')); %>",
+  "constantPrefix": "<% print(conf.get('themeDir').replace('-', '').toUpperCase()); %>",
   "version": "1.0.0",
   "description": "A simple blank WordPress starter theme intended to use with Grunt.",
   "keywords": [
