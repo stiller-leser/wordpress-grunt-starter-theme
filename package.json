@@ -5,7 +5,7 @@
   "classPrefix": "<% print(conf.get('themeDir').replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\s/g, '')); %>",
   "constantPrefix": "<% print(conf.get('themeDir').replace(/-/g, '').toUpperCase()); %>",
   "version": "1.0.0",
-  "description": "A simple blank WordPress starter theme intended to use with Grunt.",
+  "description": "A simple blank WordPress starter theme intended to use with YeoPress, Grunt and Bower.",
   "keywords": [
     "wordpress", "grunt", "starter-theme", "bootstrap-grid"
   ],
