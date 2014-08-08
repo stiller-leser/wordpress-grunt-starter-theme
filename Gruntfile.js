@@ -1,5 +1,9 @@
 'use strict';
 module.exports = function(grunt) {
+  var npmDependencies = require('./package.json').devDependencies;
+  var hasLess = npmDependencies['grunt-contrib-less'] !== undefined;
+  var hasSass = npmDependencies['grunt-contrib-sass'] !== undefined;
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
@@ -84,13 +88,13 @@ module.exports = function(grunt) {
       }
     },
 
-    /*sass: {
+    sass: {
       dist: {
         files: {
           'assets/dist/<%= pkg.name %>.css': 'assets/dev/style.scss'
         }
       }
-    },*/
+    },
 
     autoprefixer: {
       options: {
@@ -144,6 +148,7 @@ module.exports = function(grunt) {
       },
       init: {
         src: [
+          'bower.json',
           'inc/components/*.php',
           'inc/*.php',
           'comments.php',
@@ -193,14 +198,14 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['assets/dev/scripts.js'],
-        tasks: ['clean:scripts', 'jshint', 'concat', 'uglify'],
+        tasks: ['scripts'],
         options: {
           spawn: false
         }
       },
       stylesheets: {
-        files: ['assets/dev/style.less'],
-        tasks: ['clean:stylesheets', 'less', /*'sass',*/ 'autoprefixer', 'cssmin', 'usebanner'],
+        files: (hasLess) ? ['assets/dev/style.less'] : ((hasSass) ? ['assets/dev/style.scss'] : null),
+        tasks: ['stylesheets'],
         options: {
           spawn: false
         }
@@ -213,8 +218,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  //grunt.loadNpmTasks('grunt-contrib-sass');
+  if(hasLess) {
+    grunt.loadNpmTasks('grunt-contrib-less');
+  }
+  else if(hasSass) {
+    grunt.loadNpmTasks('grunt-contrib-sass');
+  }
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-banner');
@@ -222,28 +231,58 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-wp-i18n');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', [
-    'clean',
+  grunt.registerTask('scripts', [
+    'clean:scripts',
     'jshint',
     'concat',
-    'uglify',
-    'less',
-    //'sass',
-    'autoprefixer',
-    'cssmin',
-    'usebanner'
+    'uglify'
   ]);
 
-  grunt.registerTask('theme-init', [
-    'replace:init',
-    'replace:dist',
-    'default',
+  grunt.registerTask('stylesheets', function() {
+    var arr = ['clean:stylesheets'];
+    if(hasLess) {
+      arr.push('less');
+    }
+    else if(hasSass) {
+      arr.push('sass');
+    }
+    arr.push('autoprefixer');
+    arr.push('cssmin');
+    arr.push('usebanner');
+  });
+
+  grunt.registerTask('translations', [
+    'clean:pot',
     'makepot'
   ]);
 
-  grunt.registerTask('theme-refresh' [
-    'replace:init',
-    'replace:dist',
-    'makepot'
+  grunt.registerTask('default', [
+    'watch'
   ]);
+
+  grunt.registerTask('build', [
+    'scripts',
+    'stylesheets',
+    'translations',
+    'replace:dist'
+  ]);
+
+  grunt.registerTask('setup', [
+    'replace:init',
+    'bower-install',
+    'build'
+  ]);
+
+  grunt.registerTask('bower-install', function() {
+    var done = this.async();
+    var bower = require('bower').commands;
+    bower.install().on('end', function(data) {
+      done();
+    }).on('data', function(data) {
+      console.log(data);
+    }).on('error', function(err) {
+      console.error(err);
+      done();
+    });
+  });
 };
