@@ -27,6 +27,10 @@ else
 }
 
 // components
+if( MYWPTHEME_ENABLE_BOOTSTRAP_GALLERY )
+{
+  require_once MYWPTHEME_THEME_PATH . '/inc/components/bootstrap-gallery.php';
+}
 if( MYWPTHEME_ENABLE_BOOTSTRAP_NAVIGATION )
 {
   require_once MYWPTHEME_THEME_PATH . '/inc/components/bootstrap-navigation.php';

@@ -11,7 +11,13 @@
   $(document).ready(function($) {
 
     if(theme_config.load_fancybox && $.fn.fancybox) {
-      var fancybox_args = {
+      $('a[href$=".jpg"],a[href$=".jpeg"],a[href$=".png"],a[href$=".gif"]').each(function() {
+        var $this = $(this);
+        var $wrap = $this.parents('.gallery');
+        if($wrap.length !== 0) {
+          $this.attr('rel', $wrap.attr('id'));
+        }
+      }).fancybox({
         maxWidth: 1280,
         maxHeight: 720,
         width: '90%',
@@ -20,16 +26,6 @@
         closeEffect: 'elastic',
         nextEffect: 'elastic',
         prevEffect: 'elastic'
-      };
-      $('a[href$=".jpg"],a[href$=".jpeg"],a[href$=".png"],a[href$=".gif"]').each(function() {
-        var $this = $(this);
-        var $wrap = $this.parents('.gallery');
-        if($wrap.length !== 0) {
-          $this.attr('rel', $wrap.attr('id')).fancybox(fancybox_args);
-        }
-        else {
-          $this.fancybox(fancybox_args);
-        }
       });
     }
 

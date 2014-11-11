@@ -8,6 +8,10 @@
  * @package mywptheme
  */
 
+if( !defined( 'MYWPTHEME_ENABLE_BOOTSTRAP_GALLERY' ) )
+{
+  define( 'MYWPTHEME_ENABLE_BOOTSTRAP_GALLERY', true );
+}
 if( !defined( 'MYWPTHEME_ENABLE_BOOTSTRAP_NAVIGATION' ) )
 {
   define( 'MYWPTHEME_ENABLE_BOOTSTRAP_NAVIGATION', true );
