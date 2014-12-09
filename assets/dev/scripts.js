@@ -18,10 +18,9 @@
           $this.attr('rel', $wrap.attr('id'));
         }
       }).fancybox({
-        maxWidth: 1280,
-        maxHeight: 720,
-        width: '90%',
-        height: '90%',
+        type: 'image',
+        maxWidth: '90%',
+        maxHeight: '90%',
         openEffect: 'elastic',
         closeEffect: 'elastic',
         nextEffect: 'elastic',
