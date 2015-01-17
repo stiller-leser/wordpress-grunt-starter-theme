@@ -6,14 +6,9 @@
   "constantPrefix": "<% print(conf.get('themeDir').replace(/-/g, '').toUpperCase()); %>",
   "version": "1.0.0",
   "author": {
-    "name": "John Doe",
-    "email": "john-doe@johndoe.com",
-    "url": "http://johndoe.com"
-  },
-  "homepage": "http://<%= conf.get('themeDir') %>.com",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/johndoe/<%= conf.get('themeDir') %>.git"
+    "name": "cpi",
+    "email": "info@commonpeoplei.com",
+    "url": "http://commonpeoplei.com"
   },
   "engines": {
     "node": ">= 0.10.0"
@@ -26,7 +21,7 @@
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-less": "~0.11.3",
     "grunt-autoprefixer": "~0.8.1",
-    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-cssjoin": "~0.3.0",
     "grunt-banner": "~0.2.3",
     "grunt-text-replace": "~0.3.12",
     "grunt-wp-i18n": "~0.4.5",

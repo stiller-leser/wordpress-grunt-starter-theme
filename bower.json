@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "jquery": "~1.9.1"
+    "jquery": "~1.9.1",
+    "fontawesome": "~4.1.0"
   }
 }

@@ -8,12 +8,8 @@
 function mywptheme_enqueue_scripts()
 {
   wp_enqueue_style( 'mywptheme', MYWPTHEME_THEME_URL . '/assets/dist/mywptheme.min.css', array(), MYWPTHEME_THEME_VERSION );
-  if( file_exists( MYWPTHEME_THEME_PATH . '/assets/dev/fancybox/source/jquery.fancybox.pack.js' ) )
-  {
-    wp_enqueue_style( 'jquery-fancybox', MYWPTHEME_THEME_URL . '/assets/dev/fancybox/source/jquery.fancybox.css', array(), '2.1.5' );
-    wp_enqueue_script( 'jquery-fancybox', MYWPTHEME_THEME_URL . '/assets/dev/fancybox/source/jquery.fancybox.pack.js', array( 'jquery' ), '2.1.5', true );
-  }
-  wp_enqueue_script( 'mywptheme', MYWPTHEME_THEME_URL . '/assets/dist/mywptheme.min.js', array( 'jquery' ), MYWPTHEME_THEME_VERSION, true );
+
+  wp_enqueue_script( 'mywptheme', MYWPTHEME_THEME_URL . '/assets/dist/mywptheme.min.js', array(), MYWPTHEME_THEME_VERSION, true );
 
   wp_enqueue_script( 'livereload', '<%= conf.get('url') %>:35729/livereload.js?snipver=1', array(), false, true );
 }

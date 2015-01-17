@@ -1,13 +1,11 @@
 'use strict';
 module.exports = function(grunt) {
   var npmDependencies = require('./package.json').devDependencies;
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
             ' * <%= pkg.themeName %> Version <%= pkg.version %> (<%= pkg.homepage %>)\n' +
             ' * Copyright 2015-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
-            ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
             ' */\n',
     themeheader:  '/*\n' +
                   'Theme Name: <%= pkg.themeName %>\n' +
@@ -24,9 +22,6 @@ module.exports = function(grunt) {
       stylesheets: [
         'assets/dist/<%= pkg.functionPrefix %>.css',
         'assets/dist/<%= pkg.functionPrefix %>.min.css'
-      ],
-      pot: [
-        'languages/<%= pkg.functionPrefix %>.pot'
       ]
     },
 
@@ -50,7 +45,6 @@ module.exports = function(grunt) {
         src: [
           'assets/dev/bootstrap/js/collapse.js',
           'assets/dev/bootstrap/js/dropdown.js',
-          'assets/dev/bootstrap/js/transition.js',
           'assets/dev/scripts.js'
         ],
         dest: 'assets/dist/<%= pkg.functionPrefix %>.js'
@@ -71,7 +65,8 @@ module.exports = function(grunt) {
     less: {
       dist: {
         options: {
-          strictMath: true
+          strictMath: true,
+          strictImports: true
         },
         files: {
           'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
@@ -97,12 +92,7 @@ module.exports = function(grunt) {
       }
     },
 
-    cssmin: {
-      options: {
-        compatibility: 'ie8',
-        keepSpecialComments: '*',
-        noAdvanced: true
-      },
+    cssjoin: {
       dist: {
         files: {
           'assets/dist/<%= pkg.functionPrefix %>.min.css': 'assets/dist/<%= pkg.functionPrefix %>.css'
@@ -164,7 +154,7 @@ module.exports = function(grunt) {
         }
       },
       stylesheets: {
-        files: ['assets/dev/style.less']),
+        files: ['assets/dev/style.less'],
         tasks: ['stylesheets'],
         options: {
           livereload: true
@@ -180,7 +170,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-cssjoin');
   grunt.loadNpmTasks('grunt-banner');
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-wp-i18n');
@@ -193,13 +183,13 @@ module.exports = function(grunt) {
     'uglify'
   ]);
 
-  grunt.registerTask('stylesheets', function() {
-    var arr = ['clean:stylesheets'];
-    arr.push('less');
-    arr.push('autoprefixer');
-    arr.push('cssmin');
-    arr.push('usebanner');
-  });
+  grunt.registerTask('stylesheets', [
+    'clean:stylesheets',
+    'less',
+    'autoprefixer',
+    'cssjoin',
+    'usebanner'
+  ]);
 
   grunt.registerTask('default', [
     'watch'
