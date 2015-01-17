@@ -66,7 +66,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           strictMath: true,
-          strictImports: true
+          compress: true
         },
         files: {
           'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
