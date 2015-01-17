@@ -1,28 +1,19 @@
 'use strict';
 module.exports = function(grunt) {
   var npmDependencies = require('./package.json').devDependencies;
-  var hasLess = npmDependencies['grunt-contrib-less'] !== undefined;
-  var hasSass = npmDependencies['grunt-contrib-sass'] !== undefined;
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
             ' * <%= pkg.themeName %> Version <%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+            ' * Copyright 2015-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
             ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
             ' */\n',
     themeheader:  '/*\n' +
                   'Theme Name: <%= pkg.themeName %>\n' +
-                  'Theme URI: <%= pkg.homepage %>\n' +
                   'Author: <%= pkg.author.name %>\n' +
                   'Author URI: <%= pkg.author.url %>\n' +
-                  'Description: <%= pkg.description %>\n' +
                   'Version: <%= pkg.version %>\n' +
-                  'License: <%= pkg.license.name %>\n' +
-                  'License URI: <%= pkg.license.url %>\n' +
-                  'Text Domain: <%= pkg.functionPrefix %>\n' +
-                  'Domain Path: /languages/\n' +
-                  'Tags:\n' +
                   '*/',
 
     clean: {
@@ -84,14 +75,6 @@ module.exports = function(grunt) {
         },
         files: {
           'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
-        }
-      }
-    },
-
-    sass: {
-      dist: {
-        files: {
-          'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.scss'
         }
       }
     },
@@ -172,29 +155,6 @@ module.exports = function(grunt) {
       }
     },
 
-    makepot: {
-      dist: {
-        options: {
-          domainPath: '/languages',
-          potComments: 'Copyright (c) 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>',
-          potFilename: '<%= pkg.functionPrefix %>.pot',
-          potHeaders: {
-            'report-msgid-bugs-to': '<%= pkg.homepage %>',
-            'x-generator': 'grunt-wp-i18n 0.4.5',
-            'x-poedit-basepath': '.',
-            'x-poedit-language': 'English',
-            'x-poedit-country': 'UNITED STATES',
-            'x-poedit-sourcecharset': 'uft-8',
-            'x-poedit-keywordslist': '__;_e;_x:1,2c;_ex:1,2c;_n:1,2; _nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__; esc_html__;esc_attr_e; esc_html_e;esc_attr_x:1,2c; esc_html_x:1,2c;',
-            'x-poedit-bookmars': '',
-            'x-poedit-searchpath-0': '.',
-            'x-textdomain-support': 'yes'
-          },
-          type: 'wp-theme'
-        }
-      }
-    },
-
     watch: {
       scripts: {
         files: ['assets/dev/scripts.js'],
@@ -204,7 +164,7 @@ module.exports = function(grunt) {
         }
       },
       stylesheets: {
-        files: (hasLess) ? ['assets/dev/style.less'] : ((hasSass) ? ['assets/dev/style.scss'] : null),
+        files: ['assets/dev/style.less']),
         tasks: ['stylesheets'],
         options: {
           livereload: true
@@ -218,12 +178,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  if(hasLess) {
-    grunt.loadNpmTasks('grunt-contrib-less');
-  }
-  else if(hasSass) {
-    grunt.loadNpmTasks('grunt-contrib-sass');
-  }
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-banner');
@@ -240,21 +195,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('stylesheets', function() {
     var arr = ['clean:stylesheets'];
-    if(hasLess) {
-      arr.push('less');
-    }
-    else if(hasSass) {
-      arr.push('sass');
-    }
+    arr.push('less');
     arr.push('autoprefixer');
     arr.push('cssmin');
     arr.push('usebanner');
   });
-
-  grunt.registerTask('translations', [
-    'clean:pot',
-    'makepot'
-  ]);
 
   grunt.registerTask('default', [
     'watch'
@@ -263,7 +208,6 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'scripts',
     'stylesheets',
-    'translations',
     'replace:dist'
   ]);
 
