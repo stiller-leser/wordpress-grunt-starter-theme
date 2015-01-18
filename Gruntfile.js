@@ -14,17 +14,6 @@ module.exports = function(grunt) {
                   'Version: <%= pkg.version %>\n' +
                   '*/',
 
-    clean: {
-      scripts: [
-        'assets/dist/<%= pkg.functionPrefix %>.js',
-        'assets/dist/<%= pkg.functionPrefix %>.min.js'
-      ],
-      stylesheets: [
-        'assets/dist/<%= pkg.functionPrefix %>.css',
-        'assets/dist/<%= pkg.functionPrefix %>.min.css'
-      ]
-    },
-
     jshint: {
       options: {
         jshintrc: 'assets/dev/.jshintrc'
@@ -34,43 +23,14 @@ module.exports = function(grunt) {
       ]
     },
 
-    concat: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      src: [
-        'assets/dev/bootstrap/js/*.js',
-        'assets/dev/scripts.js'
-      ],
-      dest: 'assets/dist/<%= pkg.functionPrefix %>.js'
-    },
-
     uglify: {
       options: {
         preserveComments: 'some',
         report: 'min'
       },
-      src: '<%= concat.dist.dest %>',
-      dest: 'assets/dist/<%= pkg.functionPrefix %>.min.js'
-    },
-
-    less: {
-      dev: {
-        options: {
-          strictMath: true
-        },
-        files: {
-          'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
-        }
-      },
-      prod: {
-        options: {
-          strictMath: true,
-          compress: true
-        },
-        files: {
-          'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
-        }
+      dist: {
+        src: '<%= concat.dist.dest %>',
+        dest: 'assets/dist/<%= pkg.functionPrefix %>.min.js'
       }
     },
 
@@ -87,13 +47,24 @@ module.exports = function(grunt) {
           'Safari >= 6'
         ]
       },
-      src: 'assets/dist/<%= pkg.functionPrefix %>.css'
+      dist: {
+        src: 'assets/dist/<%= pkg.functionPrefix %>.css'
+      }
     },
 
     cssjoin: {
-      files: {
-       'assets/dist/<%= pkg.functionPrefix %>.min.css': 'assets/dist/<%= pkg.functionPrefix %>.css'
-      }
+      dist: {
+        files: {
+          'assets/dist/<%= pkg.functionPrefix %>.min.css': 'assets/dist/<%= pkg.functionPrefix %>.css'
+        }
+      },
+    },
+
+    copy: {
+      main: {
+        src: 'assets/dev/scripts.js',
+        dest: 'assets/dist/scripts.js'
+      },
     },
 
     usebanner: {
@@ -107,7 +78,7 @@ module.exports = function(grunt) {
     },
 
     replace: {
-      prod: {
+      dist: {
         src: ['style.css'],
         overwrite: true,
         replacements: [{
@@ -139,10 +110,140 @@ module.exports = function(grunt) {
           to: '<%= pkg.functionPrefix %>'
         }]
       }
-    },
+    }
+  });
+  
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-cssjoin');
+  grunt.loadNpmTasks('grunt-banner');
+  grunt.loadNpmTasks('grunt-text-replace');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-    watch: {
-      dev:{
+  grunt.registerTask('concat:dev', 'concats scripts for dev', function(){
+    grunt.config.merge({    
+      concat: {
+        options: {
+          banner: '<%= banner %>'
+        },
+        dist: {
+          src: [
+            'assets/dev/bootstrap/js/*.js'
+          ],
+          dest: 'assets/dist/<%= pkg.functionPrefix %>.js'
+        }
+      }
+    });
+    grunt.task.run('concat');
+    grunt.task.run('copy');
+  });
+
+  grunt.registerTask('concat:prod', 'concats scripts for prod', function(){
+    grunt.config.merge({    
+      concat: {
+        options: {
+          banner: '<%= banner %>'
+        },
+        dist: {
+          src: [
+            'assets/dev/bootstrap/js/*.js',
+            'assets/dev/scripts.js'
+          ],
+          dest: 'assets/dist/<%= pkg.functionPrefix %>.js'
+        }
+      }
+    });
+    grunt.task.run('concat');
+  });
+
+  grunt.registerTask('less:dev', 'compiles less scripts for dev', function(){
+    grunt.config.merge({    
+      less: {
+        dist: {
+          options: {
+            strictMath: true
+          },
+          files: {
+            'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
+          }
+        }
+      },
+    });
+    grunt.task.run('less');
+  });
+
+  grunt.registerTask('less:prod', 'compiles less scripts for prod', function(){
+    grunt.config.merge({    
+      less: {
+        dist: {
+          options: {
+            strictMath: true,
+            compress: true
+          },
+          files: {
+            'assets/dist/<%= pkg.functionPrefix %>.css': 'assets/dev/style.less'
+          }
+        }
+      },
+    });
+    grunt.task.run('less');
+  });
+
+  grunt.registerTask('cleanAll', 'removes not minified files', function(){
+    grunt.config.merge({
+      clean: 
+        files [
+          'assets/dist/<%= pkg.functionPrefix %>.js',
+          'assets/dist/<%= pkg.functionPrefix %>.min.js',
+          'assets/dist/<%= pkg.functionPrefix %>.css',
+          'assets/dist/<%= pkg.functionPrefix %>.min.css'
+        ]
+    });
+    grunt.task.run('clean');
+  });
+
+  grunt.registerTask('cleanProdCss', 'removes not minified files', function(){
+    grunt.config.merge({
+      clean: 
+        files ['assets/dist/<%= pkg.functionPrefix %>.css']
+    });
+    grunt.task.run('clean');
+  });
+
+  grunt.registerTask('cleanProdJs', 'removes not minified files', function(){
+    grunt.config.merge({
+      clean: 
+        files [
+          'assets/dist/<%= pkg.functionPrefix %>.js'
+        ]
+    });
+    grunt.task.run('clean');
+  });
+
+  grunt.registerTask('stylesheets:dev', 'prepares stylesheets for dev', function(){
+    grunt.task.run(['cleanAll', 'less:dev', 'autoprefixer']);
+  });
+
+  grunt.registerTask('stylesheets:prod', 'prepares stylesheets for prod', function(){
+    grunt.task.run(['cleanAll', 'less:prod', 'autoprefixer', 'cssjoin', 'usebanner', 'cleanProdCss']);
+  });
+
+  grunt.registerTask('scripts:dev', 'prepares scripts for dev', function(){
+    grunt.task.run(['cleanAll', 'jshint', 'concat:dev']);
+  });
+
+  grunt.registerTask('scripts:prod', 'prepares scripts for prod', function(){
+    grunt.task.run(['cleanAll', 'jshint', 'concat:prod', 'uglify', 'cleanProdJs']);
+  });
+
+  grunt.registerTask('watch:dev', 'watch setup for dev environment', function(){
+    grunt.config.merge({
+      watch: {
         scripts: {
           files: ['assets/dev/scripts.js'],
           tasks: ['scripts:dev'],
@@ -157,56 +258,32 @@ module.exports = function(grunt) {
             livereload: true
           }
         }
-      },
-      prod:{
+      }
+    });
+    grunt.task.run('watch');    
+  });
+
+  grunt.registerTask('watch:prod', 'watch setup for prod environment', function(){
+    grunt.config.merge({
+      watch: {
         scripts: {
-          files: ['assets/dev/scripts.js'],
+          files: ['assets/dist/scripts.js'],
           tasks: ['scripts:prod'],
           options: {
             livereload: true
           }
         },
         stylesheets: {
-          files: ['assets/dev/style.less'],
+          files: ['assets/dist/style.less'],
           tasks: ['stylesheets:prod'],
           options: {
             livereload: true
           }
         }
       }
-    }
-
+    });
+    grunt.task.run('watch');    
   });
-
-  scripts: {
-    dev: {
-      tasks: ['clean:scripts', 'jshint']
-    },
-    prod: {
-      tasks: ['clean:scripts', 'jshint', 'concat', 'uglify']
-    }
-  }
-
-  stylesheets: {
-    dev: {
-      tasks: ['clean:stylesheets', 'less:dev', 'autoprefixer']
-    },
-    prod: {
-      tasks: ['clean:stylesheets', 'less:prod', 'autoprefixer', 'cssjoin', 'usebanner']
-    }
-  }
-  
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-cssjoin');
-  grunt.loadNpmTasks('grunt-banner');
-  grunt.loadNpmTasks('grunt-text-replace');
-  grunt.loadNpmTasks('grunt-wp-i18n');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', [
     'watch:dev'
@@ -216,16 +293,16 @@ module.exports = function(grunt) {
     'watch:prod'
   ]);
 
-  grunt.registerTask('build-dev', [
+  grunt.registerTask('build:dev', [
     'scripts:dev',
     'stylesheets:dev',
-    'replace:prod'
+    'replace:dist'
   ])
 
-  grunt.registerTask('build-prod', [
+  grunt.registerTask('build:prod', [
     'scripts:prod',
     'stylesheets:prod',
-    'replace:prod'
+    'replace:dist'
   ]);
 
   grunt.registerTask('setup', [
