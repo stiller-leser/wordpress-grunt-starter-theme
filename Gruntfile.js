@@ -197,7 +197,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cleanAll', 'removes not minified files', function(){
     grunt.config.merge({
       clean: 
-        files [
+        [
           'assets/dist/<%= pkg.functionPrefix %>.js',
           'assets/dist/<%= pkg.functionPrefix %>.min.js',
           'assets/dist/<%= pkg.functionPrefix %>.css',
@@ -210,7 +210,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cleanProdCss', 'removes not minified files', function(){
     grunt.config.merge({
       clean: 
-        files ['assets/dist/<%= pkg.functionPrefix %>.css']
+        ['assets/dist/<%= pkg.functionPrefix %>.css']
     });
     grunt.task.run('clean');
   });
@@ -218,7 +218,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cleanProdJs', 'removes not minified files', function(){
     grunt.config.merge({
       clean: 
-        files [
+        [
           'assets/dist/<%= pkg.functionPrefix %>.js'
         ]
     });
@@ -226,19 +226,19 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('stylesheets:dev', 'prepares stylesheets for dev', function(){
-    grunt.task.run(['cleanAll', 'less:dev', 'autoprefixer']);
+    grunt.task.run(['less:dev', 'autoprefixer']);
   });
 
   grunt.registerTask('stylesheets:prod', 'prepares stylesheets for prod', function(){
-    grunt.task.run(['cleanAll', 'less:prod', 'autoprefixer', 'cssjoin', 'usebanner', 'cleanProdCss']);
+    grunt.task.run(['less:prod', 'autoprefixer', 'cssjoin', 'usebanner', 'cleanProdCss']);
   });
 
   grunt.registerTask('scripts:dev', 'prepares scripts for dev', function(){
-    grunt.task.run(['cleanAll', 'jshint', 'concat:dev']);
+    grunt.task.run(['jshint', 'concat:dev']);
   });
 
   grunt.registerTask('scripts:prod', 'prepares scripts for prod', function(){
-    grunt.task.run(['cleanAll', 'jshint', 'concat:prod', 'uglify', 'cleanProdJs']);
+    grunt.task.run(['jshint', 'concat:prod', 'uglify', 'cleanProdJs']);
   });
 
   grunt.registerTask('watch:dev', 'watch setup for dev environment', function(){
@@ -286,20 +286,24 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
+    'cleanAll',
     'watch:dev'
   ]);
 
   grunt.registerTask('watch-production', [
+    'cleanAll',
     'watch:prod'
   ]);
 
   grunt.registerTask('build:dev', [
+    'cleanAll',
     'scripts:dev',
     'stylesheets:dev',
     'replace:dist'
   ])
 
   grunt.registerTask('build:prod', [
+    'cleanAll',
     'scripts:prod',
     'stylesheets:prod',
     'replace:dist'
